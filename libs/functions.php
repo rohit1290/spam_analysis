@@ -66,4 +66,17 @@ function get_spam_log_from_txt() {
   return $return;
 }
 
+
+function remove_old_log_files(\Elgg\Hook $hook) {
+  $filename = (int)date("Ymd", strtotime('-5 day'));
+  $path = _elgg_config()->dataroot."span_analysis";
+
+  $files = scandir($path);
+  foreach ($files as $key => $file) {
+    if((int)$file <= $filename) {
+      unlink("{$path}/{$file}");
+    }
+  }
+}
+
  ?>
