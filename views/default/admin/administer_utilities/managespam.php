@@ -1,6 +1,6 @@
 <?php
 
-$log = get_spam_log_from_txt();
+$log = get_spam_logs();
 
 $tabs = [
 	[

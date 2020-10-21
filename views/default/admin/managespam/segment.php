@@ -19,8 +19,14 @@
    <?php
      foreach ($table as $tb_key => $dt_to) {
        if($tb_key == "") {continue; }
+       $tb_key_link = elgg_view('output/url', [
+                       		'href' => "ajax/view/managespam/popup?str={$tb_key}",
+                       		'text' => $tb_key,
+                       		'class' => 'elgg-lightbox',
+                       	]);
+       
          echo "<tr>";
-         echo 		"<td>{$tb_key}</td>";
+         echo 		"<td>{$tb_key_link}</td>";
          echo 		"<td>{$dt_to[$dates[0]]}</td>";
          echo 		"<td>{$dt_to[$dates[1]]}</td>";
          echo 		"<td>{$dt_to[$dates[2]]}</td>";

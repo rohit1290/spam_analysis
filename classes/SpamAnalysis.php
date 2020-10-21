@@ -54,6 +54,9 @@ class SpamAnalysis extends DefaultPluginBootstrap {
 			
 		// plugin hook cron daily
 		elgg_register_plugin_hook_handler('cron', 'daily', 'remove_old_log_files');
+		
+		// Register Ajax view
+		elgg_register_ajax_view('managespam/popup');
 
 		// Administer Utilities Menu
   	elgg_register_menu_item('page', [

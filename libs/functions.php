@@ -17,26 +17,9 @@ function save_spam_log_to_txt($email, $ip, $call_from) {
 
 }
 
-function get_spam_log_from_txt() {
+function get_spam_logs() {
   
-  $filenames[] = date("Ymd");
-  $filenames[] = date("Ymd", strtotime('-1 day'));
-  $filenames[] = date("Ymd", strtotime('-2 day'));
-  $filenames[] = date("Ymd", strtotime('-3 day'));
-  $filenames[] = date("Ymd", strtotime('-4 day'));
-  
-  $logs = "";
-  $return = [];
-  $path = _elgg_config()->dataroot."span_analysis";
-  
-  foreach ($filenames as $key => $fn) {
-    if(file_exists("{$path}/{$fn}")) {
-      $logs .= file_get_contents("{$path}/{$fn}");
-    }
-  }
-  
-  $lines = [];
-  $lines = explode("\n", $logs);
+  $lines = get_spam_log_from_txt();
   if(count($lines) > 0 ) {
     foreach ($lines as $linenum => $value) {
       $elem = explode("|", $value);
@@ -66,6 +49,28 @@ function get_spam_log_from_txt() {
   return $return;
 }
 
+function get_spam_log_from_txt() {
+  $filenames[] = date("Ymd");
+  $filenames[] = date("Ymd", strtotime('-1 day'));
+  $filenames[] = date("Ymd", strtotime('-2 day'));
+  $filenames[] = date("Ymd", strtotime('-3 day'));
+  $filenames[] = date("Ymd", strtotime('-4 day'));
+  
+  $logs = "";
+  $return = [];
+  $path = _elgg_config()->dataroot."span_analysis";
+  
+  foreach ($filenames as $key => $fn) {
+    if(file_exists("{$path}/{$fn}")) {
+      $logs .= file_get_contents("{$path}/{$fn}");
+    }
+  }
+  
+  $lines = [];
+  $lines = explode("\n", $logs);
+
+  return $lines;
+}
 
 function remove_old_log_files(\Elgg\Hook $hook) {
   $filename = (int)date("Ymd", strtotime('-5 day'));
