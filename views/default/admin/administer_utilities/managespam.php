@@ -1,4 +1,5 @@
 <?php
+elgg_load_css('datatables.css');
 
 $log = get_spam_logs();
 
@@ -34,5 +35,5 @@ echo elgg_view('page/components/tabs', [
 	'tabs' => $tabs,
 ]);
 
-
+elgg_require_js('admin/administer_utilities/managespam');
 ?>
