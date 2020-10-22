@@ -24,6 +24,7 @@ function get_spam_logs() {
     foreach ($lines as $linenum => $value) {
       if($value == "") { continue; }
       $elem = explode("|", $value);
+      $tmp_date = date("Y-m-d", strtotime($elem[0]));
       
       // elem 0 - Date
       // elem 1 - call from
@@ -31,18 +32,19 @@ function get_spam_logs() {
       // elem 3 - domain
       // elem 4 - ip
       
+      
       // Email
-      $return['email'][$elem[2]][$elem[0]] += 1;
+      $return['email'][$elem[2]][$tmp_date] += 1;
       $return['email'][$elem[2]]['total'] += 1;
       // Domain
-      $return['domain'][$elem[3]][$elem[0]] += 1;
+      $return['domain'][$elem[3]][$tmp_date] += 1;
       $return['domain'][$elem[3]]['total'] += 1;
       // IP
-      $return['ip'][$elem[4]][$elem[0]] += 1;
+      $return['ip'][$elem[4]][$tmp_date] += 1;
       $return['ip'][$elem[4]]['total'] += 1;
       
       // Date
-      $return['date'][date("Y-m-d", strtotime($elem[0]))] = date("Y-m-d", strtotime($elem[0]));
+      $return['date'][$tmp_date] = $tmp_date;
 
     }
   }
