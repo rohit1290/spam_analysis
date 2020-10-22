@@ -20,7 +20,7 @@ class SpamAnalysis extends DefaultPluginBootstrap {
       if(elgg_is_active_plugin('spam_login_filter')) {
 				$email = get_input('email');
 				$ip = \Spam\LoginFilter\get_ip();
-        if (!\Spam\LoginFilter\check_spammer($email, $ip)) {
+        if (!\Spam\LoginFilter\check_spammer($email, $ip, true, false)) {
           save_spam_log_to_txt($email, $ip, "action:validate-register");
         }
       }
@@ -33,7 +33,7 @@ class SpamAnalysis extends DefaultPluginBootstrap {
       if(elgg_is_active_plugin('spam_login_filter')) {
 				$ip = \Spam\LoginFilter\get_ip();
 				$email = get_input('email');
-        if (!\Spam\LoginFilter\check_spammer($email, $ip)) {
+        if (!\Spam\LoginFilter\check_spammer($email, $ip, true, false)) {
           save_spam_log_to_txt($email, $ip, "action:validate-send_mail");
         }
       }
