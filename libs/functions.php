@@ -3,7 +3,7 @@
 function save_spam_log_to_txt($email, $ip, $call_from) {
   
   $filename = date("Ymd");
-  $date = date("Y-m-d");
+  $date = date("Y-m-d H:i:s");
   $domain_name = substr(strrchr($email, "@"), 1);
   
   $path = _elgg_config()->dataroot."span_analysis";
@@ -22,6 +22,7 @@ function get_spam_logs() {
   $lines = get_spam_log_from_txt();
   if(count($lines) > 0 ) {
     foreach ($lines as $linenum => $value) {
+      if($value == "") { continue; }
       $elem = explode("|", $value);
       
       // elem 0 - Date
@@ -41,7 +42,7 @@ function get_spam_logs() {
       $return['ip'][$elem[4]]['total'] += 1;
       
       // Date
-      $return['date'][$elem[0]] = $elem[0];
+      $return['date'][date("Y-m-d", strtotime($elem[0]))] = date("Y-m-d", strtotime($elem[0]));
 
     }
   }
