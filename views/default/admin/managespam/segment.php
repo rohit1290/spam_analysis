@@ -26,7 +26,11 @@
                          		'href' => "ajax/view/managespam/popup?str={$tb_key}",
                          		'text' => $tb_key,
                          		'class' => 'elgg-lightbox',
-                         	]);
+                            'data-colorbox-opts' => json_encode([
+                                'width' => '80%',
+                                'height' => '80%'
+                              ]),
+                          ]);
          
            echo "<tr>";
            echo 		"<td>{$tb_key_link}</td>";

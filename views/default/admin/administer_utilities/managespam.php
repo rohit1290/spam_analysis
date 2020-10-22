@@ -1,3 +1,8 @@
+<style>
+table {
+    font-size: 12px;
+}
+</style>
 <?php
 elgg_load_css('datatables.css');
 
