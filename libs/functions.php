@@ -6,7 +6,7 @@ function save_spam_log_to_txt($email, $ip, $call_from) {
   $date = date("Y-m-d H:i:s");
   $domain_name = substr(strrchr($email, "@"), 1);
   
-  $path = _elgg_config()->dataroot."span_analysis";
+  $path = _elgg_config()->dataroot."spam_analysis";
   if(!file_exists($path)) {
   	mkdir($path, 0777, true);
 	}
@@ -61,7 +61,7 @@ function get_spam_log_from_txt() {
   
   $logs = "";
   $return = [];
-  $path = _elgg_config()->dataroot."span_analysis";
+  $path = _elgg_config()->dataroot."spam_analysis";
   
   foreach ($filenames as $key => $fn) {
     if(file_exists("{$path}/{$fn}")) {
@@ -77,7 +77,7 @@ function get_spam_log_from_txt() {
 
 function remove_old_log_files(\Elgg\Hook $hook) {
   $filename = (int)date("Ymd", strtotime('-5 day'));
-  $path = _elgg_config()->dataroot."span_analysis";
+  $path = _elgg_config()->dataroot."spam_analysis";
 
   $files = scandir($path);
   foreach ($files as $key => $file) {
