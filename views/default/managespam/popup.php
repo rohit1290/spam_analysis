@@ -11,6 +11,7 @@ if(count($lines) > 0 ) {
     }
   }
 }
+sort($logs);
 ?>
 <table class="popup_tab" cellspacing="2" cellpadding="5" style="margin: 20px; width:90%">
   <tr>
