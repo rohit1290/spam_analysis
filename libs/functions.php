@@ -72,6 +72,7 @@ function get_spam_log_from_txt() {
   
   $lines = [];
   $lines = explode("\n", $logs);
+  $lines = array_filter($lines);
 
   return $lines;
 }
