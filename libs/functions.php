@@ -64,6 +64,7 @@ function get_spam_log_from_txt() {
   $path = _elgg_config()->dataroot."spam_analysis";
   
   foreach ($filenames as $key => $fn) {
+    if($fn == "." || $fn == "..") { continue; }
     if(file_exists("{$path}/{$fn}")) {
       $logs .= file_get_contents("{$path}/{$fn}");
     }
@@ -81,6 +82,7 @@ function remove_old_log_files(\Elgg\Hook $hook) {
 
   $files = scandir($path);
   foreach ($files as $key => $file) {
+    if($file == "." || $file == "..") { continue; }
     if((int)$file <= $filename) {
       unlink("{$path}/{$file}");
     }
