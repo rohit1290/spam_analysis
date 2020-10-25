@@ -2,6 +2,10 @@
 
 function save_spam_log_to_txt($email, $ip, $call_from) {
   
+  $email = str_replace(array("\n", "\r"), '', $email);
+  $ip = str_replace(array("\n", "\r"), '', $ip);
+  $call_from = str_replace(array("\n", "\r"), '', $call_from);
+  
   $filename = date("Ymd");
   $date = date("Y-m-d H:i:s");
   $domain_name = substr(strrchr($email, "@"), 1);
@@ -31,7 +35,6 @@ function get_spam_logs() {
       // elem 2 - email
       // elem 3 - domain
       // elem 4 - ip
-      
       
       // Email
       $return['email'][$elem[2]][$tmp_date] += 1;
