@@ -1,9 +1,11 @@
 define(["jquery", "datatables/datatables.min"], function ($) {
     $(document).ready(function () {
       
+      var index = $('#tb_Email').find('th:last').index();
+      
       var op = {
         responsive: true,
-        "order": [[ 6, "desc" ]],
+        "order": [[ index, "desc" ]],
         paging: false
       };
 

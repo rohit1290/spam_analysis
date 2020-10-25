@@ -23,6 +23,11 @@ function save_spam_log_to_txt($email, $ip, $call_from) {
 
 function get_spam_logs() {
   
+  $log_show_days = (int)$setting = elgg_get_plugin_setting('log_show_days', 'spam_analysis', 5);
+  for ($i = 0; $i < $log_show_days ; $i++) {
+    $scope_date[] = date("Y-m-d", strtotime("-{$i} day"));
+  }
+  
   $lines = get_spam_log_from_txt();
   if(count($lines) > 0 ) {
     foreach ($lines as $linenum => $value) {
@@ -36,18 +41,23 @@ function get_spam_logs() {
       // elem 3 - domain
       // elem 4 - ip
       
-      // Email
-      $return['email'][$elem[2]][$tmp_date] += 1;
-      $return['email'][$elem[2]]['total'] += 1;
+      if(in_array($tmp_date, $scope_date)) {
+        // Email
+        $return['email'][$elem[2]][$tmp_date] += 1;
+        // Domain
+        $return['domain'][$elem[3]][$tmp_date] += 1;
+        // IP
+        $return['ip'][$elem[4]][$tmp_date] += 1;
+        // Date
+        $return['date'][$tmp_date] = $tmp_date;
+      }
+
       // Domain
-      $return['domain'][$elem[3]][$tmp_date] += 1;
       $return['domain'][$elem[3]]['total'] += 1;
+      // Email
+      $return['email'][$elem[2]]['total'] += 1;
       // IP
-      $return['ip'][$elem[4]][$tmp_date] += 1;
       $return['ip'][$elem[4]]['total'] += 1;
-      
-      // Date
-      $return['date'][$tmp_date] = $tmp_date;
 
     }
   }
@@ -56,11 +66,12 @@ function get_spam_logs() {
 }
 
 function get_spam_log_from_txt() {
-  $filenames[] = date("Ymd");
-  $filenames[] = date("Ymd", strtotime('-1 day'));
-  $filenames[] = date("Ymd", strtotime('-2 day'));
-  $filenames[] = date("Ymd", strtotime('-3 day'));
-  $filenames[] = date("Ymd", strtotime('-4 day'));
+  
+  $log_retain_days = (int)$setting = elgg_get_plugin_setting('log_retain_days', 'spam_analysis', 5);
+
+  for ($i = 0; $i < $log_retain_days ; $i++) {
+    $filenames[] = date("Ymd", strtotime("-{$i} day"));
+  }
   
   $logs = "";
   $return = [];
@@ -81,7 +92,10 @@ function get_spam_log_from_txt() {
 }
 
 function remove_old_log_files(\Elgg\Hook $hook) {
-  $filename = (int)date("Ymd", strtotime('-5 day'));
+  
+  $log_retain_days = (int)$setting = elgg_get_plugin_setting('log_retain_days', 'spam_analysis', 5);
+  
+  $filename = (int)date("Ymd", strtotime("-{$log_retain_days} day"));
   $path = _elgg_config()->dataroot."spam_analysis";
 
   $files = scandir($path);
