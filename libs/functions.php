@@ -92,8 +92,10 @@ function get_spam_log_from_txt() {
 }
 
 function remove_old_log_files(\Elgg\Hook $hook) {
-  
+  echo "\nSpamAnalysis: Removing Old log files\n<br>";
+
   $log_retain_days = (int)$setting = elgg_get_plugin_setting('log_retain_days', 'spam_analysis', 5);
+  echo "Removing logs older than $log_retain_days days\n<br>";
   
   $filename = (int)date("Ymd", strtotime("-{$log_retain_days} day"));
   $path = _elgg_config()->dataroot."spam_analysis";
@@ -101,9 +103,12 @@ function remove_old_log_files(\Elgg\Hook $hook) {
   $files = scandir($path);
   foreach ($files as $key => $file) {
     if($file == "." || $file == "..") { continue; }
+    echo "File: $file; Filename: $filename ";
     if((int)$file <= $filename) {
       unlink("{$path}/{$file}");
+      echo "- Deleted";
     }
+    echo "\n<br>";
   }
 }
 
