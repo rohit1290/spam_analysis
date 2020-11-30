@@ -3,15 +3,11 @@
     <name>Spam Analysis</name>
     <id>spam_analysis</id>
     <author>Rohit Gupta</author>
-    <version>3.0.0</version>
+    <version>3.1.0</version>
     <description>Analyse Spam Email, IP, Domain to identify any treand.</description>
     <requires>
         <type>elgg_release</type>
-        <version>3.1.0</version>
-    </requires>
-    <requires>
-        <type>elgg_release</type>
-        <version>3.1.0</version>
+        <version>3.0.0</version>
     </requires>
     <requires>
        <type>plugin</type>
